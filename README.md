@@ -4,7 +4,7 @@ Project Title: Tetris
 Setting up the Game:
 
 	To start, we must first define the blocks. These are the different shapes 
-	you are given in tetris. ![alt text](https://i.stack.imgur.com/RaboC.png) 
+	you are given in tetris. ![alt text](images/blocks.png) 
 =================================================================================
 Included files: 
 
