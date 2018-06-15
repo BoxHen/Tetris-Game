@@ -13,11 +13,18 @@ opening and closing curly brace {}.
 Let vs var:
 The var keyword can declare variables at a global or function level scope but cannot give block level scope. This is where let comes 
 in. All variables declared with let have block level scope, limiting its scope to the statement or expression from within which it 
-is declared.
+is declared. When using let if says that the value will be reassigned but using const will mean the value is constant 
 
 Const:
 const cannot be reassigned entirely but in terms of objects, its properties can be changed.
 The way I like to think about it with an object is that the person is me. I’m not going to ever change, my entire life, but attributes 
 about me are going to change. Maybe my age, my hair color, where I live — things about me — are going to change. That’s fine, as long 
 as the object that is assigned is always the exact same object
+
+Arrow Fucntions: ("=>")
+Arrow functions – also called “fat arrow” functions, from CoffeeScript — are a more concise syntax for writing function expressions.
+	Reference: https://www.sitepoint.com/es6-arrow-functions-new-fat-concise-syntax-javascript/
+
+Tuples: 
+Tuples are fixed size in nature whereas lists are dynamic. In other words, a tuple is immutable whereas a list is mutable.
 
