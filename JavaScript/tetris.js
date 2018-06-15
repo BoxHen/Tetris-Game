@@ -18,11 +18,11 @@ const matrix = [
   [0, 1, 0]
 ];
 
-const player = {
+const piece = { // object in JS
   pos: {x: 5, y :5},
-  matrix: matrix,
+  matrix: matrix
 }
-/*==============================Functions=====================================*/
+/*==============================Functions=====================================*/ // adds the pieces
 /* draws the game board*/
 function drawMatrix(matrix, offset){ // offset used to move the block around
   matrix.forEach((row, y) => {
@@ -39,7 +39,7 @@ function drawMatrix(matrix, offset){ // offset used to move the block around
 function drawPieces(){
   tetrisGrid.fillStyle = '#000';
   tetrisGrid.fillRect(0,0, canvas.width, canvas.height); // draws a rect with no fill
-  drawMatrix(player.matrix, player.pos);
+  drawMatrix(piece.matrix, piece.pos);
 }
 /*============================================================================*/
 // controls the pieces animations as they move down automatically
@@ -53,18 +53,32 @@ function update(time = 0){ // the time we get from requestAnimationFrame but def
 
   dropCounter += deltaTime;
   if(dropCounter >= dropInterval){ // about every second (depending on the dropInterval) the block will fall
-    player.pos.y++;
-    dropCounter = 0; // reset the counter so block does not disappear from the screen
+    pieceDrop();
+    // dropCounter = 0; // reset the counter so block does not disappear from the screen
   }
   drawPieces();
   requestAnimationFrame(update);
 }
 /*============================================================================*/
+// drops the piece down based on dropInterval
+function pieceDrop(){
+  piece.pos.y++;
+  dropCounter = 0;
+}
+/*============================================================================*/
 // controls piece movemnt as user presses the arrowkeys
 document.addEventListener('keydown', event => {
   //console.log(event); //used to see what the keycode is
-  if(event.keyCode === 37){ // 37 corresponds to arrow key left
-    player.pos.x--;
+  if(event.keyCode === 37){ // corresponds to arrow key LEFT
+    piece.pos.x--;
+  }
+    // else if(event.keyCode === 38) {// corresponds to arrow key UP
+    // piece.pos.y--;
+      // note: No up in tetris but this may be used in future for a unique mode
+  else if (event.keyCode === 39) { // corresponds to arrow key RIGHT
+    piece.pos.x++;
+  } else if(event.keyCode === 40){ // corresponds to arrow key DOWN
+    pieceDrop();
   }
 });
 update();
