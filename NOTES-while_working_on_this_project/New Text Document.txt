@@ -1,0 +1,23 @@
+global level scope:
+is accessible from anywhere within the script from which it was created. It is declared at the the top most level and is accessible 
+from within child scopes such as functions or statements.
+
+Function level scope: 
+is limited to within the function from which is was declared and any child scopes such as nested functions or statements. Variables 
+with function level scope are not accessible outside the function they were declared.
+
+Block level scope: 
+is limited further to the statement or expression of which the variable was declared. Or in simple terms, anywhere between an 
+opening and closing curly brace {}.
+
+Let vs var:
+The var keyword can declare variables at a global or function level scope but cannot give block level scope. This is where let comes 
+in. All variables declared with let have block level scope, limiting its scope to the statement or expression from within which it 
+is declared.
+
+Const:
+const cannot be reassigned entirely but in terms of objects, its properties can be changed.
+The way I like to think about it with an object is that the person is me. I’m not going to ever change, my entire life, but attributes 
+about me are going to change. Maybe my age, my hair color, where I live — things about me — are going to change. That’s fine, as long 
+as the object that is assigned is always the exact same object
+
