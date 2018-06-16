@@ -28,3 +28,8 @@ Arrow functions – also called “fat arrow” functions, from CoffeeScript — are a m
 Tuples: 
 Tuples are fixed size in nature whereas lists are dynamic. In other words, a tuple is immutable whereas a list is mutable.
 
+undefined in JS:
+JavaScript has the concept of coercing values. When you use the negation ("NOT") operator (!), the thing you're negating has to be a 
+boolean, so it coerces its argument to boolean if it's not boolean already. The rules for doing that are defined by the specification: 
+Basically, if the value is undefined, null, "", 0, or NaN, it coerces to false; otherwise, it coerces to true.
+So !undefined is true because undefined coerces to false, and then ! negates it.
