@@ -43,6 +43,7 @@ grid_height = 20; // this makes the grid 400x800
     tetrisGrid.fillStyle = '#000';
     tetrisGrid.fillRect(0,0, canvas.width, canvas.height); // draws a rect with no fill
     drawMatrix(piece.matrix, piece.pos);
+    drawMatrix(arena, {x:0, y:0});
   }
   /*--------------------------------------------------------------------------*/
   // controls the pieces animations as they move down automatically
