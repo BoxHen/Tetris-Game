@@ -72,6 +72,7 @@
     requestAnimationFrame(update);
   }
   /*--------------------------------------------------------------------------*/
+  // created the matrix, arena, to record where pieces are saved on the board
   function createMatrix(w,h){
     const matrix = [];
     while(h--){ // while h is not zero we decrease
@@ -80,6 +81,7 @@
     return matrix;
   }
   /*--------------------------------------------------------------------------*/
+  // draws the new piece onto the matrix
   function merge(arena, piece){
     piece.matrix.forEach((row, y) =>{
       row.forEach((value, x) => {
@@ -90,16 +92,16 @@
     });
   }
   /*--------------------------------------------------------------------------*/
-  // hcekcs for collision on game board
+  // chekcs for collision on game board
   function collision(arena, piece){
     const [m, o] = [piece.matrix, piece.pos];
     for(let y = 0; y < m.length; ++y){
       for(let x = 0; x < m[y].length; ++x){
         // checks if it is not zero, has a row, and has a column repectively
-        if(m[y][x] !== 0 && (arena[y + o.y] && arena[y + o.y][x + o.x]) !== 0){ // checks if the piece is within the arena(game board)
+        if(m[y][x] !== 0 && (arena[y + o.y] && arena[y + o.y][x + o.x]) !== 0){ // checks if the piece is within the arena(game board) and if something is there in the arena already
           // note: if it reaches bottom or side of the board -> undefined
-          // In JS values are coerced so undefined id coerced to false
-          // if the piece reaches bottom or side, arena[] returns false
+          // so, undefined !== 0
+          console.log(arena[y + o.y] && arena[y + o.y][x + o.x]);
           return true;
         }
       }
@@ -107,6 +109,7 @@
     return false;
   }
   /*--------------------------------------------------------------------------*/
+  // moves the piece on the x axis and controls the boundaries on left and right
   function pieceMove(dir){
     piece.pos.x += dir;
     if(collision(arena, piece)){
@@ -114,7 +117,26 @@
     }
   }
   /*--------------------------------------------------------------------------*/
+  // rotation: transpose + reverse = rotate
+  function rotate(matrix, dir){
+    for(let i = 0; i < matrix.length; i++){
+      for(let j = 0; j < i; j++ ){
+        //[ matrix[j][i], matrix[i][j] ] = [ matrix[i][j], matrix[j][i] ];
+        var temp = matrix[i][j];
+        matrix[i][j] = matrix[j][i];
+        matrix[j][i] = temp;
+      }
+    }
+    if(dir > 0){
+      matrix.forEach(row => row.reverse());
+    } else {
+      matrix.reverse();
+    }
+  }
   /*--------------------------------------------------------------------------*/
+  function pieceRotate(dir){
+    rotate(piece.matrix, dir);
+  }
   /*--------------------------------------------------------------------------*/
   /*--------------------------------------------------------------------------*/
   // controls piece movemnt as user presses the arrowkeys
@@ -130,6 +152,10 @@
       pieceMove(1) //piece.pos.x++;
     } else if(event.keyCode === 40){ // corresponds to arrow key DOWN
       pieceDrop();
+    } else if (event.keyCode === 81) { // Q
+      pieceRotate(-1);
+    } else if (event.keyCode === 87) { // W
+      pieceRotate(1);
     }
   });
 

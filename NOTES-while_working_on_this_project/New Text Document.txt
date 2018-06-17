@@ -28,6 +28,20 @@ Arrow functions – also called “fat arrow” functions, from CoffeeScript — are a m
 Tuples: 
 Tuples are fixed size in nature whereas lists are dynamic. In other words, a tuple is immutable whereas a list is mutable.
 
+destructuring assignment: 
+syntax is a JavaScript expression that makes it possible to unpack values from arrays, or properties from objects, into distinct variables.
+var a, b, rest;
+
+[a, b] = [10, 20];
+
+
+console.log(a);
+// expected output: 10
+
+
+console.log(b);
+// expected output: 20
+
 undefined in JS:
 JavaScript has the concept of coercing values. When you use the negation ("NOT") operator (!), the thing you're negating has to be a 
 boolean, so it coerces its argument to boolean if it's not boolean already. The rules for doing that are defined by the specification: 
