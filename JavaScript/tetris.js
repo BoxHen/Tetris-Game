@@ -119,23 +119,36 @@
   /*--------------------------------------------------------------------------*/
   // rotation: transpose + reverse = rotate
   function rotate(matrix, dir){
+    var test = matrix
     for(let i = 0; i < matrix.length; i++){
       for(let j = 0; j < i; j++ ){
-        //[ matrix[j][i], matrix[i][j] ] = [ matrix[i][j], matrix[j][i] ];
+        //[ matrix[j][i], matrix[i][j] ] = [ matrix[i][j], matrix[j][i] ]; same as below
         var temp = matrix[i][j];
         matrix[i][j] = matrix[j][i];
         matrix[j][i] = temp;
       }
     }
     if(dir > 0){
-      matrix.forEach(row => row.reverse());
+      matrix.forEach(row => row.reverse()); // reverses the content in the rows
     } else {
-      matrix.reverse();
+      matrix.reverse(); // reverse the rows
     }
   }
   /*--------------------------------------------------------------------------*/
   function pieceRotate(dir){
     rotate(piece.matrix, dir);
+    /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    This will not offset the piece but prevent pieces getting stuck in wall
+    if(collision(arena, piece)){
+      pieceRotate(-1*dir);
+    }
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+    if(collision(arena, piece)){ // refer to 31 !!! may be a bug here
+      piece.pos.x++;
+      if(collision(arena, piece)){
+        piece.pos.x -= 2;
+      }
+    }
   }
   /*--------------------------------------------------------------------------*/
   /*--------------------------------------------------------------------------*/
