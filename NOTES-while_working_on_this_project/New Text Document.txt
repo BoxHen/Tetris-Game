@@ -47,3 +47,27 @@ JavaScript has the concept of coercing values. When you use the negation ("NOT")
 boolean, so it coerces its argument to boolean if it's not boolean already. The rules for doing that are defined by the specification: 
 Basically, if the value is undefined, null, "", 0, or NaN, it coerces to false; otherwise, it coerces to true.
 So !undefined is true because undefined coerces to false, and then ! negates it.
+
+flooring a number:
+we can use | 0 (bitwise or with a zero)
+All bitwise operations except unsigned right shift, >>>, work on signed 32-bit integers. So using bitwise operations will convert a float to an integer.
+	advantages   : faster
+	disadvantages: Will not pass jsLint.
+		       32-bit signed integers only
+		       Odd Comparative behavior: Math.floor(NaN) === NaN, while (NaN | 0) === 0
+
+strings vs arrays in javaScript:
+Strings are not arrays because they are inheriting from different prototypes (*) and hence have different instance methods. For example, arrays have a 
+method join and strings have a method match.
+From one point of view, arrays and strings are similar though, because they are both array-like objects.
+What does array-like mean? It means that the object has a length property and numeric properties. A string has a length property which gives you the 
+number of characters in the string, and you can access single characters of the string with str[i].
+reference: https://stackoverflow.com/questions/21808687/whats-the-difference-between-a-string-and-an-array-of-characters-in-javascript
+
+
+
+
+
+
+
+

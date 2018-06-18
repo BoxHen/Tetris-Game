@@ -8,19 +8,19 @@
   // tetrisGrid.fillStyle = '#000';
   // tetrisGrid.fillRect(0,0, canvas.width, canvas.height); // draws a rect with no fill
 /*==============================Constants=====================================*/
-  const matrix = [
-    [0, 0, 0],
-    [1, 1, 1],
-    [0, 1, 0]
-  ];
+  // const matrix = [
+  //   [0, 0, 0],
+  //   [1, 1, 1],
+  //   [0, 1, 0]
+  // ];
 
   const arena = createMatrix(10, 20);
     console.log(arena); console.table(arena);
 
   const piece = { // object in JS
     pos: {x: 5, y :5},
-    matrix: matrix
-  }
+    matrix: createPiece('T')
+  };
 
 /*==============================Functions=====================================*/ // adds the pieces
   /* draws the game board*/
@@ -43,13 +43,69 @@
     drawMatrix(arena, {x:0, y:0});
   }
   /*--------------------------------------------------------------------------*/
+  function createPiece(type){
+    switch(type){
+      case 'I':
+        return [
+          [0, 0, 0, 0],
+          [1, 1, 1, 1],
+          [0, 0, 0, 0],
+          [0, 0, 0, 0]
+        ]; break;
+      case 'L':
+        return [
+          [0, 0, 0],
+          [1, 1, 1],
+          [1, 0, 0]
+        ]; break;
+      case 'J':
+        return [
+          [0, 0, 0],
+          [1, 1, 1],
+          [0, 0, 1]
+        ]; break;
+      case 'O':
+        return [
+          [1, 1],
+          [1, 1]
+        ]; break;
+      case 'S':
+        return [
+          [0, 0, 0],
+          [0, 1, 1],
+          [1, 1, 0]
+        ]; break;
+      case 'Z':
+        return [
+          [0, 0, 0],
+          [1, 1, 0],
+          [0, 1, 1]
+        ]; break;
+      case 'T':
+        return [
+          [0, 0, 0],
+          [1, 1, 1],
+          [0, 1, 0]
+        ];
+    } // end switch
+  }
+  /*--------------------------------------------------------------------------*/
+  // chooses a random piece
+  function randomPiece(){
+    const pieceLetters = 'ILJOSZT'; //list each piece in string and we will refer to them with indexes
+    piece.matrix = createPiece(pieceLetters[pieceLetters.length * Math.random() | 0]); // "| 0" acts as a floor
+    piece.pos.y = 0; // this and next line puts the next piece at the top centered
+    piece.pos.x = ( (arena[0].length / 2) | 0) - ( (piece.matrix[0].length / 2) | 0);
+  }
+  /*--------------------------------------------------------------------------*/
   // drops the piece down based on dropInterval
   function pieceDrop(){
     piece.pos.y++;
     if(collision(arena, piece)){
       piece.pos.y--;
       merge(arena, piece);
-      piece.pos.y = 0; // resets the piece back at the top
+      //piece.pos.y = 0; // resets the piece back at the top
+      randomPiece();
     }
     dropCounter = 0;
   }
