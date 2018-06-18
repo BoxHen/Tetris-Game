@@ -21,21 +21,23 @@
     pos: {x: 5, y :5},
     matrix: createPiece('T')
   };
+  // the values in the matrix will correspond to the index of the array of colors 
+  const colors = [null, 'cyan', 'orange' , 'blue', 'yellow', 'green', 'red', 'purple']; // 0th index is null since values start at 1 so colors will start at 1th index
 
 /*==============================Functions=====================================*/ // adds the pieces
-  /* draws the game board*/
+  // draw the tetris pieces
   function drawMatrix(matrix, offset){ // offset used to move the block around
     matrix.forEach((row, y) => { // x and y here are the indexes
       row.forEach((value, x) => {
         if(value !== 0){
-          tetrisGrid.fillStyle = 'purple';
-          tetrisGrid.fillRect(x+offset.x, y+offset.y, 1, 1); // !!!!!! add offset to x and y later
+          tetrisGrid.fillStyle = colors[value];
+          tetrisGrid.fillRect(x+offset.x, y+offset.y, 1, 1);
         }
       });
     });
   }
   /*--------------------------------------------------------------------------*/
-  // draw the tetris pieces
+   /* draws the game board*/
   function drawPieces(){
     tetrisGrid.fillStyle = '#000';
     tetrisGrid.fillRect(0,0, canvas.width, canvas.height); // draws a rect with no fill
@@ -55,37 +57,37 @@
       case 'L':
         return [
           [0, 0, 0],
-          [1, 1, 1],
-          [1, 0, 0]
+          [2, 2, 2],
+          [2, 0, 0]
         ]; break;
       case 'J':
         return [
           [0, 0, 0],
-          [1, 1, 1],
-          [0, 0, 1]
+          [3, 3, 3],
+          [0, 0, 3]
         ]; break;
       case 'O':
         return [
-          [1, 1],
-          [1, 1]
+          [4, 4],
+          [4, 4]
         ]; break;
       case 'S':
         return [
           [0, 0, 0],
-          [0, 1, 1],
-          [1, 1, 0]
+          [0, 5, 5],
+          [5, 5, 0]
         ]; break;
       case 'Z':
         return [
           [0, 0, 0],
-          [1, 1, 0],
-          [0, 1, 1]
+          [6, 6, 0],
+          [0, 6, 6]
         ]; break;
       case 'T':
         return [
           [0, 0, 0],
-          [1, 1, 1],
-          [0, 1, 0]
+          [7, 7, 7],
+          [0, 7, 0]
         ];
     } // end switch
   }
