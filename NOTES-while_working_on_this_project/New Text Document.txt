@@ -64,7 +64,10 @@ What does array-like mean? It means that the object has a length property and nu
 number of characters in the string, and you can access single characters of the string with str[i].
 reference: https://stackoverflow.com/questions/21808687/whats-the-difference-between-a-string-and-an-array-of-characters-in-javascript
 
-
+.includes:
+checks if a certain value is in a array 
+	ex: var array = [0, 1, 2, 3];
+	    array.includes(0); // true
 
 
 

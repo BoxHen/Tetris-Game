@@ -21,7 +21,7 @@
     pos: {x: 5, y :5},
     matrix: createPiece('T')
   };
-  // the values in the matrix will correspond to the index of the array of colors 
+  // the values in the matrix will correspond to the index of the array of colors
   const colors = [null, 'cyan', 'orange' , 'blue', 'yellow', 'green', 'red', 'purple']; // 0th index is null since values start at 1 so colors will start at 1th index
 
 /*==============================Functions=====================================*/ // adds the pieces
@@ -106,6 +106,7 @@
     if(collision(arena, piece)){
       piece.pos.y--;
       merge(arena, piece);
+      lineComplete();
       //piece.pos.y = 0; // resets the piece back at the top
       randomPiece();
       // may want to revise this for a game over signal
@@ -215,6 +216,15 @@
     }
   }
   /*--------------------------------------------------------------------------*/
+  function lineComplete(){
+    for(let y = arena.length-1; y > 0; --y){
+      if( !(arena[y].includes(0)) ){ // cehcks if row does not includes a 0 (all filled)
+        arena.splice(y, 1); // removes the line with no zeros(filled)
+        arena.unshift([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]); // addes empty row back to top
+      }
+    }
+
+  }
   /*--------------------------------------------------------------------------*/
   // controls piece movemnt as user presses the arrowkeys
   document.addEventListener('keydown', event => {
