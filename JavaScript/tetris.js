@@ -106,6 +106,12 @@
       merge(arena, piece);
       //piece.pos.y = 0; // resets the piece back at the top
       randomPiece();
+      // may want to revise this for a game over signal
+      if(collision(arena, piece)){ // clears the game board if filled up to the top
+        arena.forEach(row => {
+          row.fill(0);
+        });
+      }
     }
     dropCounter = 0;
   }
