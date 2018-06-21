@@ -18,8 +18,9 @@
     console.log(arena); console.table(arena);
 
   const piece = { // object in JS
-    pos: {x: 5, y :5},
-    matrix: createPiece('T')
+    pos: {x: 0, y :0},
+    matrix: null,
+    score: 0,
   };
   // the values in the matrix will correspond to the index of the array of colors
   const colors = [null, 'cyan', 'orange' , 'blue', 'yellow', 'green', 'red', 'purple']; // 0th index is null since values start at 1 so colors will start at 1th index
@@ -106,9 +107,9 @@
     if(collision(arena, piece)){
       piece.pos.y--;
       merge(arena, piece);
-      lineComplete();
       //piece.pos.y = 0; // resets the piece back at the top
       randomPiece();
+      lineComplete();
       // may want to revise this for a game over signal
       if(collision(arena, piece)){ // clears the game board if filled up to the top
         arena.forEach(row => {
@@ -217,13 +218,22 @@
   }
   /*--------------------------------------------------------------------------*/
   function lineComplete(){
-    for(let y = arena.length-1; y > 0; --y){
-      if( !(arena[y].includes(0)) ){ // cehcks if row does not includes a 0 (all filled)
+    for(let y = arena.length-1; y > 0; y--){
+      // console.log(y);
+      // console.log(!(arena[y].includes(0)));
+      // debugger;
+      if( !(arena[y].includes(0)) ){ // checks if row does not includes a 0 (all filled)
         arena.splice(y, 1); // removes the line with no zeros(filled)
         arena.unshift([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]); // addes empty row back to top
+        ++y; // this is important since after the rows gets moved down, the index starts over at 19
+             // without this filled rows may not get removed
       }
     }
 
+  }
+  /*--------------------------------------------------------------------------*/
+  function scoreUpdate(){
+    document.getElementById('score').innertext = piece.score;
   }
   /*--------------------------------------------------------------------------*/
   // controls piece movemnt as user presses the arrowkeys
@@ -246,6 +256,7 @@
     }
   });
 
+  randomPiece();
   update();
 
 
