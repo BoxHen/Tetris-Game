@@ -110,14 +110,18 @@
       //piece.pos.y = 0; // resets the piece back at the top
       randomPiece();
       lineComplete();
+      scoreUpdate();
+      /*--------------------------------------------------------------------------*/
       // may want to revise this for a game over signal
       if(collision(arena, piece)){ // clears the game board if filled up to the top
         arena.forEach(row => {
           row.fill(0);
         });
+        piece.score= 0; // reset the score if filled up to the top
+        scoreUpdate(); // need to do this to show score
       }
     }
-    dropCounter = 0;
+    dropCounter = 0; // reset the counter so block does not disappear from the screen (go down faster)
   }
   /*--------------------------------------------------------------------------*/
   // controls the pieces animations as they move down automatically
@@ -132,7 +136,7 @@
     dropCounter += deltaTime;
     if(dropCounter >= dropInterval){ // about every second (depending on the dropInterval) the block will fall
       pieceDrop();
-      // dropCounter = 0; // reset the counter so block does not disappear from the screen
+      // dropCounter = 0; // reset the counter so block does not disappear from the screen (go down faster)
     }
     drawPieces();
     requestAnimationFrame(update);
@@ -218,20 +222,21 @@
   }
   /*--------------------------------------------------------------------------*/
   function lineComplete(){
+    let rowCount = 1;
     for(let y = arena.length-1; y > 0; y--){
-      // console.log(y);
-      // console.log(!(arena[y].includes(0)));
-      // debugger;
       if( !(arena[y].includes(0)) ){ // checks if row does not includes a 0 (all filled)
         arena.splice(y, 1); // removes the line with no zeros(filled)
         arena.unshift([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]); // addes empty row back to top
         ++y; // this is important since after the rows gets moved down, the index starts over at 19
-             // without this filled rows may not get removed
+             // without this filled rows may not get removed until the next piece
+        piece.score += rowCount*100; // one row is worth 100 pts
+        rowCount*=2; // double the row count for every row complete
       }
     }
 
   }
   /*--------------------------------------------------------------------------*/
+  // writes the score to the page
   function scoreUpdate(){
     document.getElementById('score').innertext = piece.score;
   }
@@ -257,6 +262,7 @@
   });
 
   randomPiece();
+  scoreUpdate();
   update();
 
 
