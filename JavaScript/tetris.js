@@ -4,7 +4,11 @@
   var canvas = document.getElementById('tetris');
   var tetrisGrid = canvas.getContext('2d');
 
+<<<<<<< HEAD
+  //tetrisGrid.scale(20, 20);
+=======
   tetrisGrid.scale(20, 20);
+>>>>>>> 0914d7d109e5f0d499c83dc26975a1a0403f1894
   // tetrisGrid.fillStyle = '#000';
   // tetrisGrid.fillRect(0,0, canvas.width, canvas.height); // draws a rect with no fill
 /*==============================Constants=====================================*/
@@ -38,9 +42,34 @@
     });
   }
   /*--------------------------------------------------------------------------*/
+<<<<<<< HEAD
+  function drawGrid(tetrisGrid){
+    tetrisGrid.strokeStyle = 'black';
+    tetrisGrid.lineWidth = 5;
+    for(let i = 0; i < 200; i+=20){
+      // console.log(i);
+      // debugger;
+      tetrisGrid.beginPath();
+      tetrisGrid.moveTo(i, 0);
+      tetrisGrid.lineTo(i, 400);
+      tetrisGrid.stroke();
+    }
+    for(let j = 0; j < 400; j+=20){
+      tetrisGrid.moveTo(0, j);
+      tetrisGrid.lineTo(200, j);
+      tetrisGrid.stroke();
+    }
+  }
+  /*--------------------------------------------------------------------------*/
+
+   /* draws the game board*/
+  function drawPieces(){
+    //tetrisGrid.fillStyle = 'white';
+=======
    /* draws the game board*/
   function drawPieces(){
     tetrisGrid.fillStyle = '#000';
+>>>>>>> 0914d7d109e5f0d499c83dc26975a1a0403f1894
     tetrisGrid.fillRect(0,0, canvas.width, canvas.height); // draws a rect with no fill
     drawMatrix(piece.matrix, piece.pos);
     drawMatrix(arena, {x:0, y:0});
@@ -238,7 +267,11 @@
   /*--------------------------------------------------------------------------*/
   // writes the score to the page
   function scoreUpdate(){
+<<<<<<< HEAD
+    document.getElementById('score').innerText = piece.score;
+=======
     document.getElementById('score').innertext = piece.score;
+>>>>>>> 0914d7d109e5f0d499c83dc26975a1a0403f1894
   }
   /*--------------------------------------------------------------------------*/
   // controls piece movemnt as user presses the arrowkeys
@@ -261,6 +294,10 @@
     }
   });
 
+<<<<<<< HEAD
+  drawGrid(tetrisGrid);
+=======
+>>>>>>> 0914d7d109e5f0d499c83dc26975a1a0403f1894
   randomPiece();
   scoreUpdate();
   update();
