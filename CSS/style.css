@@ -1,0 +1,12 @@
+canvas{
+  border-color: black;
+  border: solid .3em;
+  background-color: white;
+}
+body{
+  background-color: gray;
+  text-align:center;
+}
+#score{
+  font-size: 3.5em;
+}
