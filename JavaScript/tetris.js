@@ -3,79 +3,73 @@
   // create the game grid
   var canvas = document.getElementById('tetris');
   var tetrisGrid = canvas.getContext('2d');
+  let initPiece = 0;
+  let initStore = 0;
+  let shiftEnable = true;
 
-<<<<<<< HEAD
-  //tetrisGrid.scale(20, 20);
-=======
-  tetrisGrid.scale(20, 20);
->>>>>>> 0914d7d109e5f0d499c83dc26975a1a0403f1894
-  // tetrisGrid.fillStyle = '#000';
-  // tetrisGrid.fillRect(0,0, canvas.width, canvas.height); // draws a rect with no fill
+  // small box for showing the next piece to come
+  var canvas1 = document.getElementById('nextPiece');
+  var nextPieceGrid = canvas1.getContext('2d');
+  nextPieceGrid.fillStyle = 'white'; // white canvas (game board)
+  nextPieceGrid.fillRect(0,0, canvas1.width, canvas1.height); // draws a rect and fills ot white
+  nextPieceGrid.scale(20, 20);
+  //---------------------------------------------------------------------------
+  //
+  var canvas2 = document.getElementById('storedPiece');
+  var storedPieceGrid = canvas2.getContext('2d');
+  storedPieceGrid.fillStyle = 'white'; // white canvas (game board)
+  storedPieceGrid.fillRect(0,0, canvas2.width, canvas2.height); // draws a rect and fills ot white
+  storedPieceGrid.scale(20, 20);
+
+  tetrisGrid.scale(20, 20); // makes the canvas oixels bigger so we dont have to make a huge matrix for the arena
 /*==============================Constants=====================================*/
-  // const matrix = [
-  //   [0, 0, 0],
-  //   [1, 1, 1],
-  //   [0, 1, 0]
-  // ];
-
   const arena = createMatrix(10, 20);
-    console.log(arena); console.table(arena);
 
   const piece = { // object in JS
     pos: {x: 0, y :0},
-    matrix: null,
+    matrix: null, // current piece
+    nextMatrix: null, // for next piece
+    storedMatrix: null, // for shift
     score: 0,
   };
   // the values in the matrix will correspond to the index of the array of colors
-  const colors = [null, 'cyan', 'orange' , 'blue', 'yellow', 'green', 'red', 'purple']; // 0th index is null since values start at 1 so colors will start at 1th index
-
+  const colors = [null, 'cyan', 'orange' , 'blue', '#e1e600', 'green', 'red', 'purple']; // 0th index is null since values start at 1 so colors will start at 1th index
+  // yellow is in code since it was too light on the white background
 /*==============================Functions=====================================*/ // adds the pieces
-  // draw the tetris pieces
-  function drawMatrix(matrix, offset){ // offset used to move the block around
+  // draw the tetris pieces and the gameboard
+  function drawMatrix(matrix, offset, Grid){ // offset used to move the block around // Grid used so i can use this function for both canvas
     matrix.forEach((row, y) => { // x and y here are the indexes
       row.forEach((value, x) => {
         if(value !== 0){
-          tetrisGrid.fillStyle = colors[value];
-          tetrisGrid.fillRect(x+offset.x, y+offset.y, 1, 1);
+          Grid.fillStyle = colors[value];
+          Grid.fillRect(x+offset.x, y+offset.y, 1, 1);
         }
       });
     });
   }
   /*--------------------------------------------------------------------------*/
-<<<<<<< HEAD
-  function drawGrid(tetrisGrid){
-    tetrisGrid.strokeStyle = 'black';
-    tetrisGrid.lineWidth = 5;
-    for(let i = 0; i < 200; i+=20){
-      // console.log(i);
-      // debugger;
-      tetrisGrid.beginPath();
-      tetrisGrid.moveTo(i, 0);
-      tetrisGrid.lineTo(i, 400);
-      tetrisGrid.stroke();
-    }
-    for(let j = 0; j < 400; j+=20){
-      tetrisGrid.moveTo(0, j);
-      tetrisGrid.lineTo(200, j);
-      tetrisGrid.stroke();
-    }
+  function drawStoredPiece(){
+    storedPieceGrid.fillStyle = 'white'; // white canvas (game board)
+    storedPieceGrid.fillRect(0,0, canvas2.width, canvas2.height); // draws a rect and fills ot white
+    drawMatrix(piece.storedMatrix, {x: 1, y :1}, storedPieceGrid); // calls drawMatrix to draw piece
   }
   /*--------------------------------------------------------------------------*/
-
-   /* draws the game board*/
-  function drawPieces(){
-    //tetrisGrid.fillStyle = 'white';
-=======
-   /* draws the game board*/
-  function drawPieces(){
-    tetrisGrid.fillStyle = '#000';
->>>>>>> 0914d7d109e5f0d499c83dc26975a1a0403f1894
-    tetrisGrid.fillRect(0,0, canvas.width, canvas.height); // draws a rect with no fill
-    drawMatrix(piece.matrix, piece.pos);
-    drawMatrix(arena, {x:0, y:0});
+  function drawNextPiece(){
+    nextPieceGrid.fillStyle = 'white'; // white canvas (game board)
+    nextPieceGrid.fillRect(0,0, canvas1.width, canvas1.height); // draws a rect and fills ot white
+    randomPiece();
+    drawMatrix(piece.nextMatrix, {x: 1, y :1}, nextPieceGrid); // calls drawMatrix to draw piece
   }
   /*--------------------------------------------------------------------------*/
-  function createPiece(type){
+   /* draws the game board and pieces*/
+  function drawPieces(){
+    tetrisGrid.fillStyle = 'white'; // white canvas (game board)
+    tetrisGrid.fillRect(0,0, canvas.width, canvas.height); // draws a rect and fills ot white
+    drawMatrix(piece.matrix, piece.pos, tetrisGrid); // calls drawMatrix to draw piece
+    drawMatrix(arena, {x:0, y:0}, tetrisGrid); // draw arena
+  }
+  /*--------------------------------------------------------------------------*/
+  function createPiece(type){ // defines all matrixes for the pieces
     switch(type){
       case 'I':
         return [
@@ -122,10 +116,22 @@
     } // end switch
   }
   /*--------------------------------------------------------------------------*/
-  // chooses a random piece
+  // gets a new random piece
   function randomPiece(){
     const pieceLetters = 'ILJOSZT'; //list each piece in string and we will refer to them with indexes
-    piece.matrix = createPiece(pieceLetters[pieceLetters.length * Math.random() | 0]); // "| 0" acts as a floor
+    piece.matrix = piece.nextMatrix;
+
+    while(initPiece == 0){
+      piece.matrix = createPiece(pieceLetters[pieceLetters.length * Math.random() | 0]); // "| 0" acts as a floor
+      initPiece++;
+    }
+
+    piece.nextMatrix = createPiece(pieceLetters[pieceLetters.length * Math.random() | 0]); // "| 0" acts as a floor
+
+  }
+  /*--------------------------------------------------------------------------*/
+  // places the random piece in the approiate position at the top of the grid
+  function rePosition(){
     piece.pos.y = 0; // this and next line puts the next piece at the top centered
     piece.pos.x = ( (arena[0].length / 2) | 0) - ( (piece.matrix[0].length / 2) | 0);
   }
@@ -133,11 +139,13 @@
   // drops the piece down based on dropInterval
   function pieceDrop(){
     piece.pos.y++;
-    if(collision(arena, piece)){
+    while(collision(arena, piece)){
       piece.pos.y--;
       merge(arena, piece);
       //piece.pos.y = 0; // resets the piece back at the top
-      randomPiece();
+      drawNextPiece();
+      rePosition();
+      shiftEnable = true;
       lineComplete();
       scoreUpdate();
       /*--------------------------------------------------------------------------*/
@@ -146,11 +154,19 @@
         arena.forEach(row => {
           row.fill(0);
         });
-        piece.score= 0; // reset the score if filled up to the top
+        piece.score = 0; // reset the score if filled up to the top
         scoreUpdate(); // need to do this to show score
       }
     }
     dropCounter = 0; // reset the counter so block does not disappear from the screen (go down faster)
+  }
+  /*--------------------------------------------------------------------------*/
+  // makes piece go down until it collides
+  function quickDrop(){
+    while( !(collision(arena, piece)) ){
+      piece.pos.y++;
+    }
+    piece.pos.y--;
   }
   /*--------------------------------------------------------------------------*/
   // controls the pieces animations as they move down automatically
@@ -267,22 +283,36 @@
   /*--------------------------------------------------------------------------*/
   // writes the score to the page
   function scoreUpdate(){
-<<<<<<< HEAD
     document.getElementById('score').innerText = piece.score;
-=======
-    document.getElementById('score').innertext = piece.score;
->>>>>>> 0914d7d109e5f0d499c83dc26975a1a0403f1894
   }
   /*--------------------------------------------------------------------------*/
+  function store(){ // stores a piece when shift is pressed
+    if(initStore == 0 && shiftEnable){ // first time always store the piece and give a new piece
+      piece.storedMatrix = piece.matrix;
+      drawStoredPiece();
+      drawNextPiece();
+      rePosition();
+      shiftEnable = false;
+      initStore++;
+    } else{
+      if(shiftEnable){
+        let temp = piece.storedMatrix
+        piece.storedMatrix = piece.matrix;
+        piece.matrix = temp;
+        drawStoredPiece();
+        rePosition();
+        shiftEnable = false;
+      }
+    }
+  }
+  /*--------------------------------------------------------------------------*/
+
   // controls piece movemnt as user presses the arrowkeys
   document.addEventListener('keydown', event => {
     //console.log(event); //used to see what the keycode is
     if(event.keyCode === 37){ // corresponds to arrow key LEFT
       pieceMove(-1) //piece.pos.x--;
     }
-      // else if(event.keyCode === 38) {// corresponds to arrow key UP
-      // piece.pos.y--;
-        // note: No up in tetris but this may be used in future for a unique mode
     else if (event.keyCode === 39) { // corresponds to arrow key RIGHT
       pieceMove(1) //piece.pos.x++;
     } else if(event.keyCode === 40){ // corresponds to arrow key DOWN
@@ -291,19 +321,19 @@
       pieceRotate(-1);
     } else if (event.keyCode === 87) { // W
       pieceRotate(1);
+    } else if(event.keyCode === 38) {// corresponds to arrow key UP
+      pieceRotate(-1);
+    }else if(event.keyCode === 32) {// corresponds to arrow key UP
+      quickDrop();
+    }else if(event.keyCode === 16) {// corresponds to SHIFT key
+      store();
     }
   });
 
-<<<<<<< HEAD
-  drawGrid(tetrisGrid);
-=======
->>>>>>> 0914d7d109e5f0d499c83dc26975a1a0403f1894
-  randomPiece();
+  drawNextPiece(); // includes the random function
+  rePosition();
   scoreUpdate();
   update();
-
-
-
 
 
 /*================================Notes=======================================*/

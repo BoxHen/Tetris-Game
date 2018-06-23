@@ -1,12 +1,25 @@
-canvas{
+#tetris{
   border-color: black;
   border: solid .3em;
-  background-color: white;
+  width: auto;
+  height: auto;
+}
+#nextPiece{
+  border-color: black;
+  border: solid .3em;
+  width: auto;
+  height: auto;
+}
+#storedPiece{
+  border-color: black;
+  border: solid .3em;
+  width: auto;
+  height: auto;
 }
 body{
   background-color: gray;
   text-align:center;
 }
 #score{
-  font-size: 3.5em;
+  font-size: 2em;
 }
