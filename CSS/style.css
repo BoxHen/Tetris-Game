@@ -22,4 +22,15 @@ body{
 }
 #score{
   font-size: 2em;
+  text-align: center;
+}
+#hold{
+  float: left;
+  margin-left: 20%;
+  margin-top: 15%;
+}
+#next{
+  float: right;
+  margin-right: 20%;
+  margin-top: 15%;
 }
