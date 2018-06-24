@@ -6,6 +6,7 @@
   let initPiece = 0;
   let initStore = 0;
   let shiftEnable = true;
+  let enterEnable = true;
 
   // small box for showing the next piece to come
   var canvas1 = document.getElementById('nextPiece');
@@ -306,34 +307,40 @@
     }
   }
   /*--------------------------------------------------------------------------*/
-
+  function start(){
+    drawNextPiece(); // includes the random function
+    rePosition();
+    scoreUpdate();
+    update();
+  }
+  /*--------------------------------------------------------------------------*/
   // controls piece movemnt as user presses the arrowkeys
   document.addEventListener('keydown', event => {
     //console.log(event); //used to see what the keycode is
     if(event.keyCode === 37){ // corresponds to arrow key LEFT
       pieceMove(-1) //piece.pos.x--;
-    }
-    else if (event.keyCode === 39) { // corresponds to arrow key RIGHT
+    }else if (event.keyCode === 39) { // corresponds to arrow key RIGHT
       pieceMove(1) //piece.pos.x++;
     } else if(event.keyCode === 40){ // corresponds to arrow key DOWN
       pieceDrop();
-    } else if (event.keyCode === 81) { // Q
+    } else if (event.keyCode === 81 || event.keyCode === 90) { // Q and Z
       pieceRotate(-1);
-    } else if (event.keyCode === 87) { // W
+    } else if (event.keyCode === 87 || event.keyCode === 88) { // W and X
       pieceRotate(1);
     } else if(event.keyCode === 38) {// corresponds to arrow key UP
       pieceRotate(-1);
-    }else if(event.keyCode === 32) {// corresponds to arrow key UP
+    }else if(event.keyCode === 32) {// corresponds to space bar
       quickDrop();
     }else if(event.keyCode === 16) {// corresponds to SHIFT key
       store();
+    }else if(event.keyCode === 13 && enterEnable) {// corresponds to ENTER
+      enterEnable = false;
+      start();
     }
   });
 
-  drawNextPiece(); // includes the random function
-  rePosition();
-  scoreUpdate();
-  update();
+
+
 
 
 /*================================Notes=======================================*/

@@ -34,3 +34,9 @@ body{
   margin-right: 20%;
   margin-top: 15%;
 }
+#instructions{
+  text-align: left;
+}
+#enter{
+  color: #64ff64; 
+}
