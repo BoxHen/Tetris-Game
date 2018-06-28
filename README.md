@@ -10,12 +10,14 @@ Setting up the Game:
 	and the next as an O. From the second row, going across, I defined the blocks 
 	as a S, T, and Z respectively.
 
-	In game, thses blocks get chosen randomly and slowly move toward the bottom 
+	In game, these blocks get chosen randomly and slowly move toward the bottom 
 	of the game board. In the meantime, the player is allowed to horizontally 
-	move and rotate the pieces. There are a couple of ways to go about this. One
-	is to define the base pieces as we jsut did and simply a apply a rotation to 
-	it when needed. The problem here is the center of rotation for pieces i and 
-	O are not about a block but in between one. 
+	move and rotate the pieces. The player is allowed to speed up the downward 
+	motion of the block by using the DOWN arrow key or by doing a hard drop with
+	the space bar. While the game is running, the player will be notified of the 
+	next incoming piece so plan your moves carefully. Also players may utilize 
+	the shift key to swap a piece out. You may use this to your advantage to 
+	replace a bad piece or make a tetris.
 
 	For this game, I will define each block as a 4x4. Not all spaces on the 4x4 
 	will be used at one time but this space allows for rotations of different 
