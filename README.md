@@ -59,6 +59,7 @@ Setting up the Game:
   		tetrisGrid.scale(20, 20);
 		
 Setting up the Mechanics:
+
 	To rotate the pieces, a mathematical approach was taken. 
 ![tetris blocks](images/rotate.png) 
 	The image shows that we must first transpose then reverse the matrix. The 
@@ -69,6 +70,7 @@ Setting up the Mechanics:
 	and setup with a document.addEventListener
 	
 How to Play:
+
 	Movement: Use the arrow keys to control left, right and, down motion of the 
 	tetrominoes. Use the up arrow to rotate (q and w keys will rotate the pieces too).
 
@@ -80,6 +82,7 @@ How to Play:
 	for big plays
 	
 Play the Game: 
-	[Play](file:///C:/Users/Hchen/Desktop/Tetris/index.html "Tetris Game")
+
+[Play](file:///C:/Users/Hchen/Desktop/Tetris/index.html "Tetris Game")
 
 	
