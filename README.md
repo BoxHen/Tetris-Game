@@ -19,39 +19,67 @@ Setting up the Game:
 	the shift key to swap a piece out. You may use this to your advantage to 
 	replace a bad piece or make a tetris.
 
-	For this game, I will define each block as a 4x4. Not all spaces on the 4x4 
-	will be used at one time but this space allows for rotations of different 
-	pieces. If a spaces on the 4x4 is used we will represent that as a 1 and a 	
-	0 if it is not used. each row will be defined as a binary and we will put 
-	these rows together to form a hexadecimal
-![block rotations](images/blockRotations.PNG)
-
-	Using this convention, the blocks will be:
-	I: 0x0F00, 0x4444, 0x00F0, 0x2222
-	L: 0x2E00, 0x4460, 0x0E80, 0xC440
-	J: 0x8E00, 0x44C0, 0x0710, 0x6440
-	O: 0x0660, 0x0660, 0x0660, 0x0660
-	S: 0x06C0, 0x8C40, 0x06C0, 0x8C40
-	T: 0x0C60, 0x2640, 0x0C60, 0x2640
-	Z: 0x04E0, 0x4640, 0x0E40, 0x4C40
-
-	Accordingly, we will make JavaScript objects for each block:
-	var I = { blocks: [0x0F00, 0x4444, 0x00F0, 0x2222], color:'cyan'   }
-	var L = { blocks: [0x2E00, 0x4460, 0x0E80, 0xC440], color:'orange' }
-	var J = { blocks: [0x8E00, 0x44C0, 0x0710, 0x6440], color:'blue'   }
-	var O = { blocks: [0x0660, 0x0660, 0x0660, 0x0660], color:'yellow' }
-	var S = { blocks: [0x06C0, 0x8C40, 0x06C0, 0x8C40], color:'green'  }
-	var T = { blocks: [0x0C60, 0x2640, 0x0C60, 0x2640], color:'purple' }
-	var Z = { blocks: [0x04E0, 0x4640, 0x0E40, 0x4C40], color:'red'    }
+	For this game, I will define each block as a matrix. The matrixes are as 
+	follows:
 	
+	I:[ [0, 0, 0, 0],
+            [1, 1, 1, 1],
+            [0, 0, 0, 0],
+            [0, 0, 0, 0] ]
+	    
+        L:[ [0, 0, 0],
+            [1, 1, 1],
+            [1, 0, 0] ]
+
+        J:[ [0, 0, 0],
+            [1, 1, 1],
+            [0, 0, 1] ]
+
+        O:[ [1, 1],
+            [1, 1] ]
+
+        S:[ [0, 0, 0],
+            [0, 1, 1],
+            [1, 1, 0] ]
+	    
+        Z:[ [0, 0, 0],
+            [1, 1, 0],
+            [0, 1, 1] ]
+
+        T:[ [0, 0, 0],
+            [1, 1, 1],
+            [0, 1, 0] ]
+	    
+        Now that we set uo the pieces, we als need the grid that we will be playing 
+	on. This was setup by: 
+		var canvas = document.getElementById('tetris');
+  		var tetrisGrid = canvas.getContext('2d');
+		tetrisGrid.fillStyle = 'white'; 
+ 		tetrisGrid.fillRect(0, 0, canvas.width, canvas.height); 
+  		tetrisGrid.scale(20, 20);
+		
+Setting up the Mechanics:
+	To rotate the pieces, a mathematical approach was taken. 
+![tetris blocks](images/rotate.png) 
+	The image shows that we must first transpose then reverse the matrix. The 
+	rotation was then binded to the up arrow key for convience as well as keys 
+	q and w
 	
-=================================================================================
-Included files: 
+	To move the pieces left, right, and down the respective arrow keys were used 
+	and setup with a document.addEventListener
+	
+How to Play:
+	Movement: Use the arrow keys to control left, right and, down motion of the 
+	tetrominoes. Use the up arrow to rotate (q and w keys will rotate the pieces too).
 
+	Scoring: Each consecutive line complete will award more points. One line is worth 
+	100pts, then 300pts for 2 lines, 700pts for 3 lines, and 1500pts for 4 lines (a tetris)
 
+	Tatics: Use the Next block to see what the next piece will be. Use this to plan your 
+	moves carefully.Use the shift key to hold pieces if you got a bad piece or save a piece 
+	for big plays
+	
+Play the Game: 
+	[Play](file:///C:/Users/Hchen/Desktop/Tetris/index.html "Tetris Game")
 
-=================================================================================
-Running the program: 
-
-	Run on your internet browser such as Chrome, FireFox, etc
---------------------------------------------------
+	
