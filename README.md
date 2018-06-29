@@ -62,6 +62,7 @@ Setting up the Mechanics:
 
 	To rotate the pieces, a mathematical approach was taken. 
 ![tetris blocks](images/rotate.png) 
+
 	The image shows that we must first transpose then reverse the matrix. The 
 	rotation was then binded to the up arrow key for convience as well as keys 
 	q and w
@@ -83,6 +84,7 @@ How to Play:
 	
 Play the Game: 
 
+Start the index.HTML file
 [Play](file:///C:/Users/Hchen/Desktop/Tetris/index.html "Tetris Game")
 
 	
